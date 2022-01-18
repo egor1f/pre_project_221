@@ -11,8 +11,12 @@ import java.util.List;
 @Repository
 public class UserDaoImp implements UserDao {
 
+
+   private final SessionFactory sessionFactory;
    @Autowired
-   private SessionFactory sessionFactory;
+   public UserDaoImp(SessionFactory sessionFactory) {
+      this.sessionFactory = sessionFactory;
+   }
 
    @Override
    public void add(User user) {
@@ -24,18 +28,7 @@ public class UserDaoImp implements UserDao {
       TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
       return query.getResultList();
    }
-   @Override
-   public User getCarInfo(String model, int series) {
-      TypedQuery<User> query = sessionFactory.getCurrentSession()
-              .createQuery("from User user where user.userCar.model = :param1 and user.userCar.series = :param2", User.class);
-      query.setParameter("param1", model);
-      query.setParameter("param2", series);
-      List<User> results = query.getResultList();
-      if (results.isEmpty()) {
-         System.out.println("User not found");
-      } else if (results.size() > 1) {
-         System.out.println("There are more than one users");
-      }
-      return results.get(0);
+   public SessionFactory getSessionFactory() {
+      return sessionFactory;
    }
 }
