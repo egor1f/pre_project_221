@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MainApp {
-   public static void main(String[] args) throws SQLException {
+   public static void main(String[] args) {
       AnnotationConfigApplicationContext context = 
             new AnnotationConfigApplicationContext(AppConfig.class);
 
@@ -41,8 +41,12 @@ public class MainApp {
          System.out.println();
       }
 
-      System.out.println(userService.getCarInfo("Subaru", 1998));
+       try {
+           System.out.println(userService.getCarInfo("Subaru", 1998));
+       } catch (SQLException e) {
+           throw new RuntimeException(e);
+       }
 
-      context.close();
+       context.close();
    }
 }

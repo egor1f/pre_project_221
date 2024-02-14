@@ -41,9 +41,9 @@ public class UserServiceImp implements UserService {
       if (results.isEmpty()) {
          throw new SQLException("User not found");
       } else if (results.size() > 1) {
-         System.out.print("There are more than one users");
+         System.out.println("There are more than one users");
       }
-      return (User) results.get(0);
+      return results.get(0);
    }
 
 }
